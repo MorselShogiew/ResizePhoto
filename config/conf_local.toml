@@ -1,0 +1,10 @@
+ApplicationName = "resize-api"
+PromPrefix = "resize_photo_api"
+
+
+[ServerOpt]
+  ReadTimeout = "40s"
+  WriteTimeout = "40s"
+  IdleTimeout = "40s"
+  Port = "8080"
+
