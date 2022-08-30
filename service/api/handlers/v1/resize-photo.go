@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"errors"
 	"image/jpeg"
 	"net/http"
 	"strconv"
@@ -14,13 +13,13 @@ import (
 func (h *Handlers) GetResizePhoto(w http.ResponseWriter, r *http.Request) {
 	reqID := middleware.GetReqID(r)
 
-	employeeID := middleware.GetEmployeeID(r)
+	// employeeID := middleware.GetEmployeeID(r)
 
-	if employeeID <= 0 {
-		err := errs.New(errors.New(errs.ErrWrongEmployeeID), errs.ErrBadRequest, false, 400)
-		h.CheckErrWriteResp(err, w, reqID)
-		return
-	}
+	// if employeeID <= 0 {
+	// 	err := errs.New(errors.New(errs.ErrWrongEmployeeID), errs.ErrBadRequest, false, 400)
+	// 	h.CheckErrWriteResp(err, w, reqID)
+	// 	return
+	// }
 	heightStr := r.URL.Query().Get("height")
 	widthStr := r.URL.Query().Get("width")
 	url := r.URL.Query().Get("url")

@@ -24,10 +24,10 @@ func New(r *repos.Repositories) *ResizePhotoService {
 }
 
 func (s *ResizePhotoService) Router(r *mux.Router) {
-	v1 := r.PathPrefix("/v1/").Subrouter()
+	v1 := r.PathPrefix("/v1").Subrouter()
 	v1Auth := v1.PathPrefix("").Subrouter()
 
-	v1Auth.HandleFunc("resize", s.v1.GetResizePhoto).Methods("GET")
+	v1Auth.HandleFunc("/resize", s.v1.GetResizePhoto).Methods("GET")
 }
 
 func (s *ResizePhotoService) Start() error {
