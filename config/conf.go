@@ -24,6 +24,32 @@ type Config struct {
 	ApplicationName string      `toml:"ApplicationName" json:"app_name"`
 	PromPrefix      string      `toml:"PromPrefix" json:"prom_prefix"`
 	ServerOpts      *ServerOpts `toml:"ServerOpt" json:"server_opts"`
+	Logger          *Logger     `toml:"Logger" json:"logger"`
+	BODB            *DB         `toml:"OfficeDB" json:"office_db"`
+}
+type Logger struct {
+	Level     string     `toml:"Level" json:"level"`
+	LoggerStd *LoggerStd `toml:"LoggerStd" json:"std"`
+}
+
+type LoggerStd struct {
+	LogFile  string `toml:"LogFile" json:"file"`
+	Stdout   bool   `toml:"Stdout" json:"stdout"`
+	Disabled bool   `toml:"Disabled" json:"disabled"`
+}
+
+type DB struct {
+	Server          string   `toml:"Server" json:"host"`
+	Port            string   `toml:"Port" json:"port"`
+	FailoverHost    string   `toml:"FailoverHost" json:"failover_host"`
+	Database        string   `toml:"Database" json:"db_name"`
+	Scheme          string   `toml:"Scheme" json:"scheme"`
+	MaxIdleConns    int      `toml:"MaxIdleConns" json:"max_idle_conns"`
+	MaxOpenConns    int      `toml:"MaxOpenConns" json:"max_open_conns"`
+	ConnMaxLifetime Duration `toml:"ConnMaxLifetime" json:"conn_max_lifetime"`
+	SSLMode         bool     `toml:"SSLMode" json:"ssl_mode"`
+	Username        string   `json:"-"`
+	Password        string   `json:"-"`
 }
 
 type ServerOpts struct {

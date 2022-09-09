@@ -8,3 +8,9 @@ PromPrefix = "resize_photo_api"
   IdleTimeout = "40s"
   Port = "8080"
 
+[Logger]
+  Level = "DEBUG"
+  [Logger.LoggerStd]
+    LogFile = "/var/log/github.com/MorselShogiew/ResizePhoto.log"
+    Stdout = true
+    Disabled = false

@@ -5,6 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 
+	"github.com/MorselShogiew/ResizePhoto/logger"
 	"github.com/MorselShogiew/ResizePhoto/repos"
 	hv1 "github.com/MorselShogiew/ResizePhoto/service/api/handlers/v1"
 	"github.com/MorselShogiew/ResizePhoto/service/usecases"
@@ -15,10 +16,10 @@ type ResizePhotoService struct {
 	u  *usecases.ResizeService
 }
 
-func New(r *repos.Repositories) *ResizePhotoService {
+func New(l logger.Logger, r *repos.Repositories) *ResizePhotoService {
 	u := usecases.New(r)
 	return &ResizePhotoService{
-		v1: hv1.New(u),
+		v1: hv1.New(u, l),
 		u:  u,
 	}
 }

@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"image/jpeg"
 	"net/http"
 	"strconv"
@@ -13,13 +14,6 @@ import (
 func (h *Handlers) GetResizePhoto(w http.ResponseWriter, r *http.Request) {
 	reqID := middleware.GetReqID(r)
 
-	// employeeID := middleware.GetEmployeeID(r)
-
-	// if employeeID <= 0 {
-	// 	err := errs.New(errors.New(errs.ErrWrongEmployeeID), errs.ErrBadRequest, false, 400)
-	// 	h.CheckErrWriteResp(err, w, reqID)
-	// 	return
-	// }
 	heightStr := r.URL.Query().Get("height")
 	widthStr := r.URL.Query().Get("width")
 	url := r.URL.Query().Get("url")
@@ -29,7 +23,6 @@ func (h *Handlers) GetResizePhoto(w http.ResponseWriter, r *http.Request) {
 		h.CheckErrWriteResp(err, w, reqID)
 		return
 	}
-
 	height, err := strconv.ParseUint(heightStr, 10, 32)
 	if err != nil {
 		err := errs.New(nil, errs.ErrBadRequest, false, 500)
@@ -45,6 +38,7 @@ func (h *Handlers) GetResizePhoto(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res, err := h.u.ResizePhoto(reqID, height, width, url)
+	fmt.Println(err)
 	h.CheckErrWriteResp(err, w, reqID)
 	// Encode uses a Writer, use a Buffer if you need the raw []byte
 
