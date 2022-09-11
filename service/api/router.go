@@ -29,6 +29,7 @@ func (s *ResizePhotoService) Router(r *mux.Router) {
 	v1Auth := v1.PathPrefix("").Subrouter()
 
 	v1Auth.HandleFunc("/resize", s.v1.GetResizePhoto).Methods("GET")
+	v1Auth.HandleFunc("/url", s.v1.PostUrl).Methods("POST")
 }
 
 func (s *ResizePhotoService) Start() error {

@@ -7,7 +7,7 @@ import (
 )
 
 type ResizeDBRepo interface {
-	//пустой пока что
+	PostUrl(url string) error
 }
 
 type resizeDB struct {
@@ -16,5 +16,13 @@ type resizeDB struct {
 }
 
 func NewResizeDBRepo(p provider.Provider, l logger.Logger) ResizeDBRepo {
-	return &resizeDB{p.GetBODBConn(), l}
+	return &resizeDB{p.GetResizeDBConn(), l}
+}
+
+func (r resizeDB) PostUrl(url string) error {
+	var query = `INSERT INTO url(id,url) values($1,$2);`
+	if _, err := r.db.Exec(query, 1, url); err != nil {
+		return err
+	}
+	return nil
 }

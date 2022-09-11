@@ -1,7 +1,19 @@
 ApplicationName = "resize-api"
 PromPrefix = "resize_photo_api"
 
-
+[ResizeDB]
+  Scheme = "postgres"
+  Username = "postgres"
+	Password = "postgres"
+  Server = ""
+  FailoverHost = ""
+  Port = "5432"
+  Database = "postgres"
+  MaxIdleConns = 10
+  MaxOpenConns = 10
+  ConnMaxLifetime = "5m"
+  SSLMode = false
+  
 [ServerOpt]
   ReadTimeout = "40s"
   WriteTimeout = "40s"

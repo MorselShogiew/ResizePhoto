@@ -6,11 +6,12 @@ import (
 
 	"github.com/MorselShogiew/ResizePhoto/config"
 	"github.com/MorselShogiew/ResizePhoto/logger"
+	"github.com/MorselShogiew/ResizePhoto/provider/database"
 	"github.com/jmoiron/sqlx"
 )
 
 type Provider interface {
-	GetBODBConn() *sqlx.DB
+	GetResizeDBConn() *sqlx.DB
 
 	Close()
 }
@@ -24,7 +25,7 @@ type provider struct {
 
 // resources that should be closed manually at the end
 type resources struct {
-	bodb *sqlx.DB
+	resizedb *sqlx.DB
 }
 
 // third party apis
@@ -33,11 +34,11 @@ type apis struct {
 
 func New(conf *config.Config, l logger.Logger) Provider {
 
-	// bodb, err := database.Connect(conf.BODB)
-	// if err != nil {
-	// 	l.Fatal(err)
-	// }
-	l.Info("connected to bodb")
+	bodb, err := database.Connect(conf.ResizeDB)
+	if err != nil {
+		l.Fatal(err)
+	}
+	l.Info("connected to resizedb")
 
 	// создаем http клиента
 	c := &http.Client{
@@ -46,7 +47,7 @@ func New(conf *config.Config, l logger.Logger) Provider {
 
 	return &provider{
 		&resources{
-			//bodb,
+			bodb,
 		},
 		&apis{},
 		c,
@@ -54,8 +55,8 @@ func New(conf *config.Config, l logger.Logger) Provider {
 	}
 }
 
-func (p *provider) GetBODBConn() *sqlx.DB {
-	return p.resources.bodb
+func (p *provider) GetResizeDBConn() *sqlx.DB {
+	return p.resources.resizedb
 }
 
 func (p *provider) GetHTTPClient() *http.Client {
@@ -63,10 +64,10 @@ func (p *provider) GetHTTPClient() *http.Client {
 }
 
 func (p *provider) Close() {
-	if err := p.resources.bodb.Close(); err != nil {
-		p.l.Error("error while closing bodb:", err)
+	if err := p.resources.resizedb.Close(); err != nil {
+		p.l.Error("error while closing resizedb:", err)
 	} else {
-		p.l.Info("bodb was closed")
+		p.l.Info("resizedb was closed")
 	}
 
 }

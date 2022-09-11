@@ -25,7 +25,7 @@ type Config struct {
 	PromPrefix      string      `toml:"PromPrefix" json:"prom_prefix"`
 	ServerOpts      *ServerOpts `toml:"ServerOpt" json:"server_opts"`
 	Logger          *Logger     `toml:"Logger" json:"logger"`
-	BODB            *DB         `toml:"OfficeDB" json:"office_db"`
+	ResizeDB        *DB         `toml:"ResizeDB" json:"resize_db"`
 }
 type Logger struct {
 	Level     string     `toml:"Level" json:"level"`
@@ -48,8 +48,8 @@ type DB struct {
 	MaxOpenConns    int      `toml:"MaxOpenConns" json:"max_open_conns"`
 	ConnMaxLifetime Duration `toml:"ConnMaxLifetime" json:"conn_max_lifetime"`
 	SSLMode         bool     `toml:"SSLMode" json:"ssl_mode"`
-	Username        string   `json:"-"`
-	Password        string   `json:"-"`
+	Username        string   `toml:"username" json:"username"`
+	Password        string   `toml:"password" json:"password"`
 }
 
 type ServerOpts struct {
